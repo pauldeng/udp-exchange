@@ -28,6 +28,11 @@
 
 -export([truncate_bin/2]). %% utility
 
+-export([info/1, info/2]).
+
+info(_X) -> [].
+info(_X, _) -> [].
+
 description() ->
     [{name, ?EXCHANGE_TYPE_BIN},
      {description, <<"Experimental UDP exchange">>}].
