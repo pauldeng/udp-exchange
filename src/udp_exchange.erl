@@ -28,6 +28,8 @@
 
 -export([truncate_bin/2]). %% utility
 
+-export([route/3, delete/2]).
+
 -export([info/1, info/2]).
 
 info(_X) -> [].
@@ -42,6 +44,9 @@ serialise_events() -> false.
 %% Called when AMQP clients basic.publish to this exchange.
 route(X, Delivery) ->
     udp_exchange_sup:ensure_started_local(X) ! Delivery,
+    [].
+route(none, none, none) ->
+    %% todo: place holder for real logic
     [].
 
 %% Called every time this exchange is declared, not just the first.
@@ -63,6 +68,10 @@ create(none, X) ->
 delete(transaction, _X, _Bs) ->
     ok;
 delete(none, X, _Bs) ->
+    udp_exchange_sup:stop(X),
+    ok.
+delete(X, _Bs) ->
+    %% todo: please review
     udp_exchange_sup:stop(X),
     ok.
 
