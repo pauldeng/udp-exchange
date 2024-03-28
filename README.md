@@ -181,6 +181,38 @@ packets.
 Note that there may be platform and network-specific limitations on
 the sizes of UDP packets that can be sent and received.
 
+## Build
+
+Tested under Ubuntu 22.04.
+Note: If you are trying to build this in virtual machine, please do **NOT** use VirtualBox.
+
+```shell
+# Add RabbitMQ PPA for Erlang
+sudo add-apt-repository -y ppa:rabbitmq/rabbitmq-erlang
+
+# Install Erlang and tools
+sudo apt-get install -y erlang curl elixir
+
+# Clone RabbitMQ source code
+git clone https://github.com/rabbitmq/rabbitmq-server.git
+
+cd rabbitmq-server/deps
+
+# Clone this repo
+https://github.com/pauldeng/udp-exchange.git
+
+# Build RabbitMQ
+cd ..
+make
+
+# Build this plugin
+cd deps/udp-exchange
+make
+
+# Generate a .ez release file in rabbitmq-server/deps/udp-exchange/plugins
+DIST_AS_EZS=yes make dist
+```
+
 ## Licensing
 
 This plugin is licensed under the [MPL 2.0][]. The full license text is
